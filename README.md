@@ -1,8 +1,20 @@
 # meet4CloudService - Lab 04 Virtualisasi dan Container
 
+<!-- lecture-materials:start -->
+
+## Materi teori sebelum praktikum
+
+- [Pertemuan 04: Virtualization & Containers](slides/Teori_Pertemuan_04.pptx)
+
+Slide menghubungkan konsep, kasus kerja, bacaan/video resmi, dan langkah lab.
+
+<!-- lecture-materials:end -->
+
+**Kebijakan kelas:** Lab ini latihan formatif, tanpa tugas, nilai, atau penyerahan terpisah. Satu proyek besar dikerjakan oleh kelompok **3 orang**, dengan presentasi checkpoint minggu 7 (UTS) dan hasil akhir minggu 14 (UAS). Simpan hasil lab hanya bila berguna sebagai referensi atau bukti proses proyek. Baca [brief proyek kelompok](PROYEK_KELOMPOK.md). Bobot resmi tetap mengikuti RPS/LMS.
+
 Praktikum COMP6991031. Kasus kerja: tim operasi menjalankan halaman status internal dengan Docker, mendiagnosis layanan yang berhenti, memperbarui pengumuman tanpa rebuild image, dan mengatasi bentrokan port. Semua langkah utama menggunakan Docker CLI dan dapat dicoba pada Docker Desktop di Windows.
 
-**Mulai dari [modul mahasiswa lengkap dengan kunci challenge](MODUL_MAHASISWA.md).** Versi cetak: [PDF modul mahasiswa](output/pdf/MODUL_MAHASISWA_LAB04.pdf). Untuk dosen tersedia [panduan kelas](PANDUAN_DOSEN.md), [PDF panduan dosen](output/pdf/PANDUAN_DOSEN_LAB04.pdf), dan [slide praktikum](slides/LAB04_Docker_Lifecycle_Praktikum.pptx).
+**Mulai dari [modul mahasiswa lengkap dengan kunci challenge](MODUL_MAHASISWA.md).** Versi cetak: [PDF modul mahasiswa](output/pdf/MODUL_MAHASISWA_LAB04.pdf). [Slide praktikum](slides/LAB04_Docker_Lifecycle_Praktikum.pptx) tersedia untuk meninjau demonstrasi kelas.
 
 ## Repo mahasiswa
 

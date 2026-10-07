@@ -1,8 +1,10 @@
 # Modul mahasiswa Lab 04 - Virtualisasi dan Container
 
+**Kebijakan kelas:** Lab ini latihan formatif, tanpa tugas, nilai, atau penyerahan terpisah. Satu proyek besar dikerjakan oleh kelompok **3 orang**, dengan presentasi checkpoint minggu 7 (UTS) dan hasil akhir minggu 14 (UAS). Simpan hasil lab hanya bila berguna sebagai referensi atau bukti proses proyek. Baca [brief proyek kelompok](PROYEK_KELOMPOK.md). Bobot resmi tetap mengikuti RPS/LMS.
+
 **Cara membaca gambar:** foto Docker Desktop dan Chrome adalah screenshot langsung dari praktik. Kartu terminal menunjukkan keluaran command yang benar-benar dijalankan dan ditata ulang agar terbaca. Setiap langkah bernomor memiliki gambar hasil; untuk laporan, ambil screenshot milik Anda sendiri setelah menjalankan perintah yang tertulis tepat di dekat gambar.
 
-**COMP6991031 | Praktikum kasus kerja harian | Windows PowerShell utama, Bash/Linux alternatif.** Modul ini memuat **seluruh kunci challenge A-E**. Jalankan perintah dari root repo, kecuali bila langkah menyebut direktori lain. Setiap gambar adalah contoh hasil uji di komputer dosen; IP, waktu, ID, dan versi patch bisa berbeda. Kumpulkan screenshot hasil praktikmu sendiri.
+**COMP6991031 | Praktikum kasus kerja harian | Windows PowerShell utama, Bash/Linux alternatif.** Modul ini memuat **seluruh kunci challenge A-E**. Jalankan perintah dari root repo, kecuali bila langkah menyebut direktori lain. Setiap gambar adalah contoh hasil uji di komputer dosen; IP, waktu, ID, dan versi patch bisa berbeda. Simpan screenshot hasil praktikmu sendiri bila ingin menggunakannya sebagai referensi proyek kelompok.
 
 ## Hasil belajar dan kasus
 
