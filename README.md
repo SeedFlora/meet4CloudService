@@ -31,6 +31,6 @@ Lanjutkan urutan penuh dalam [modul mahasiswa](MODUL_MAHASISWA.md). Perintah bin
 
 ## Hasil dan keselamatan data
 
-Isi [templat laporan](hasil/TEMPLATE_LAPORAN.md) dengan output dan screenshot **milik sendiri**. Screenshot dalam modul adalah referensi hasil uji pada komputer dosen. Perintah cleanup hanya untuk container lab bernama `cloudlab-nginx`, `cloudlab-site`, dan `cloudlab-canary`. Jangan commit output penuh `docker info`, token, atau data pribadi. Tidak perlu push image ke registry untuk Lab 04.
+Isi [templat laporan](hasil/TEMPLATE_LAPORAN.md) dengan output dan screenshot **milik sendiri**. Setiap langkah bernomor di modul memiliki bukti visual serta penjelasan perintah, fungsi, cara kerja, dan hasil. Foto Chrome/Docker Desktop adalah screenshot langsung; kartu terminal adalah keluaran perintah aktual yang ditata ulang. Perintah cleanup hanya untuk container lab bernama `cloudlab-nginx`, `cloudlab-site`, dan `cloudlab-canary`. Jangan commit output penuh `docker info`, token, atau data pribadi. Tidak perlu push image ke registry untuk Lab 04.
 
 Rujukan: [Docker container](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/), [bind mount](https://docs.docker.com/engine/storage/bind-mounts/), [Docker CLI](https://docs.docker.com/reference/cli/docker/).

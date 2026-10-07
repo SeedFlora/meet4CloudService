@@ -1,5 +1,7 @@
 # Modul mahasiswa Lab 04 - Virtualisasi dan Container
 
+**Cara membaca gambar:** foto Docker Desktop dan Chrome adalah screenshot langsung dari praktik. Kartu terminal menunjukkan keluaran command yang benar-benar dijalankan dan ditata ulang agar terbaca. Setiap langkah bernomor memiliki gambar hasil; untuk laporan, ambil screenshot milik Anda sendiri setelah menjalankan perintah yang tertulis tepat di dekat gambar.
+
 **COMP6991031 | Praktikum kasus kerja harian | Windows PowerShell utama, Bash/Linux alternatif.** Modul ini memuat **seluruh kunci challenge A-E**. Jalankan perintah dari root repo, kecuali bila langkah menyebut direktori lain. Setiap gambar adalah contoh hasil uji di komputer dosen; IP, waktu, ID, dan versi patch bisa berbeda. Kumpulkan screenshot hasil praktikmu sendiri.
 
 ## Hasil belajar dan kasus
@@ -271,12 +273,18 @@ git push
 
 `git status` menunjukkan perubahan, `git add` memilih hasil praktik, `diff --cached --check` menemukan whitespace yang bermasalah, dan `push` mengirim commit ke repo pribadimu. Jangan commit data host, kredensial, atau screenshot milik dosen sebagai bukti sendiri. Tidak perlu push image Docker ke registry. Setelah bukti tersimpan, bersihkan hanya container lab:
 
+![Repo template Lab 04 setelah commit dan push](screenshots/11_github_published.jpg)
+
+*Langkah UI: sesudah `git push`, buka repo pribadi Anda di GitHub. Periksa branch `main`, pesan commit terbaru, serta file `hasil/lab04.md` dan screenshot pribadi. Foto menunjukkan repo template dosen sebagai contoh lokasi commit; repo mahasiswa akan memiliki nama dan isi commit sendiri. Perintah `git diff --cached --check` dijalankan sebelum commit untuk menolak whitespace bermasalah.*
+
 ```powershell
 docker rm -f cloudlab-canary cloudlab-site
 docker ps -a --filter name=cloudlab-
 ```
 
 Image tetap ada sehingga dapat dipakai lagi tanpa pull ulang. `rm` menghapus container, sedangkan file `site/index.html` tetap ada pada host dan di Git.
+
+**Checkpoint cleanup:** `docker ps -a --filter name=cloudlab-` hanya menampilkan header tanpa baris container lab. Buka tab **Containers** di Docker Desktop untuk memastikan `cloudlab-site` dan `cloudlab-canary` sudah tidak ada. Gambar pada langkah 3 dan 4 memperlihatkan kondisi sebelum cleanup sehingga perbedaannya dapat dibandingkan.
 
 ## Jika ada kendala
 
@@ -289,5 +297,3 @@ Image tetap ada sehingga dapat dipakai lagi tanpa pull ulang. `rm` menghapus con
 | Halaman tidak berubah | Pastikan `site/index.html` tersimpan, mount mengarah ke folder repo yang benar, lalu refresh Chrome. |
 | Challenge C/D/E gagal | Periksa `docker ps`, `docker port`, `docker inspect`, dan isi `site/index.html`; baca hint dari skrip sebelum mengulang. |
 | PowerShell menolak `.ps1` | Jalankan `bash tests/challenge.sh` dari Git Bash/WSL, atau minta dosen membantu dengan kebijakan skrip kampus; langkah Docker tetap dapat dilakukan di PowerShell. |
-
-Rujukan: [Docker container](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/), [bind mounts](https://docs.docker.com/engine/storage/bind-mounts/), [Docker CLI](https://docs.docker.com/reference/cli/docker/).

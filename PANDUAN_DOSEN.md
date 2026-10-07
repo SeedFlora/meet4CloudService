@@ -1,5 +1,7 @@
 # Panduan dosen Lab 04 - Virtualisasi dan Container
 
+**Jenis bukti visual:** foto Docker Desktop/Chrome adalah screenshot langsung. Kartu terminal adalah render keluaran perintah aktual yang ditata ulang. Setiap checkpoint A-E mempunyai gambar dan penjelasan perintah/fungsi/cara kerja/hasil; mahasiswa wajib mengambil screenshot miliknya sendiri untuk penilaian.
+
 **COMP6991031 | Sesi 04 | Kasus operasional situs status internal.** Panduan ini mendampingi [modul mahasiswa dengan kunci A-E](MODUL_MAHASISWA.md). Sumber capaian: RPS COMP6991031 sesi 04 (LO2): VM/hypervisor, container vs VM, namespaces/cgroups, arsitektur Docker, image/container lifecycle; praktik Docker Desktop/Engine, pull nginx/Python/Node, port dan environment, `ps`/`stop`/`start`/`rm`, `exec`, log, dan cleanup. Bind mount digunakan sebagai demonstrasi data host versus image.
 
 ## Target praktik dan batas kelas
@@ -200,6 +202,10 @@ Skrip mengecek **state akhir** A-E tanpa memperbaiki peserta. Screenshot outage,
 ![Challenge akhir](screenshots/10_challenge_pass.png)
 
 *Langkah: jalankan skrip challenge. Fungsi: cek hasil yang dapat diulang dosen. Cara kerja: skrip membaca metadata Docker dan HTTP lokal, memberi PASS/FAIL dengan hint. Baca hasil: semua A-E PASS; bukti proses tetap dari screenshot mahasiswa.*
+
+![Repo Lab 04 sudah menampilkan commit dan berkas modul](screenshots/11_github_published.jpg)
+
+*Langkah: minta mahasiswa membuka repo pribadinya setelah `git push`. Fungsi: membuktikan pekerjaan tersedia untuk diperiksa dosen. Cara kerja: GitHub menampilkan branch `main`, commit terakhir, dan file hasil; gambar ini berasal dari repo template dosen sebagai contoh posisi elemen UI. Cocokkan commit mahasiswa dengan laporan dan screenshot pribadinya, lalu jalankan `docker ps -a --filter name=cloudlab-` untuk memastikan cleanup hanya menyentuh container lab.*
 
 Laporan mahasiswa harus menjelaskan fungsi tiap perintah penting, hasil sebenarnya, dan apa yang dilakukan saat hasil berbeda. Buka `git diff --cached --name-only` sebelum commit untuk memastikan tidak ada data host, token, atau output `docker info` penuh. Repo mahasiswa menyimpan `site/index.html`, `hasil/lab04.md`, dan screenshot **milik mahasiswa**. Image Docker tidak perlu dipush ke registry.
 
