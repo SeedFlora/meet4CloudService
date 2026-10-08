@@ -22,7 +22,7 @@ VM membawa guest OS sendiri di atas hypervisor. Container berbagi kernel host da
 
 ## 0. Mulai dari komputer kampus dan clone repo
 
-Jalur utama Lab 04 memakai **Windows PowerShell** dan Docker Desktop dengan **Linux Engine** yang sudah disiapkan kampus. Gunakan akun serta folder kerja pribadi yang dapat ditulis. Clone repo publik pengajar sudah cukup untuk mengikuti praktik formatif; tidak ada kewajiban membuat repo, push, atau laporan per lab. Lab ini menggunakan `docker pull` dan `docker run` untuk image yang tersedia, serta file HTML host melalui bind mount.
+Jalur utama Lab 04 memakai **Windows PowerShell** dan Docker Desktop dengan **Linux Engine** yang sudah disiapkan kampus. Gunakan akun serta folder kerja pribadi yang dapat ditulis; repo boleh diletakkan di folder mana pun, termasuk path dengan spasi. Clone repo publik pengajar sudah cukup untuk mengikuti praktik formatif; tidak ada kewajiban membuat repo, push, atau laporan per lab. Lab ini menggunakan `docker pull` dan `docker run` untuk image yang tersedia, serta file HTML host melalui bind mount.
 
 ### 0.1 Periksa Git dan Docker Desktop
 
@@ -43,9 +43,9 @@ Jika Git/Docker belum tersedia, Engine tidak dapat dimulai, atau instalasi/virtu
 
 *Langkah: buka Docker Desktop dan jalankan `docker version`. Fungsi: memastikan Engine aktif sebelum menarik image. Cara kerja: CLI bertanya kepada daemon Docker; tanpa daemon, semua langkah berikutnya gagal. Baca hasil: indikator **Engine running** dan versi client/server tampil.*
 
-### 0.2 Buat folder Documents dan clone materi Lab 04
+### 0.2 Clone materi Lab 04 ke folder pilihan Anda
 
-Jika folder `meet4CloudService` sudah ada pada PC, gunakan bagian **0.3**. Untuk clone pertama, buka [repo Lab 04](https://github.com/SeedFlora/meet4CloudService), pilih **Code → Local → HTTPS**, lalu jalankan:
+Jika folder `meet4CloudService` sudah ada pada PC, gunakan bagian **0.3**. Untuk clone pertama, buka [repo Lab 04](https://github.com/SeedFlora/meet4CloudService), pilih **Code → Local → HTTPS**. Contoh berikut memakai Documents; Anda dapat memilih folder pribadi lain yang dapat ditulis:
 
 ```powershell
 $campusFolder = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'CloudServices'
@@ -54,30 +54,30 @@ Set-Location -LiteralPath $campusFolder
 git clone https://github.com/SeedFlora/meet4CloudService.git
 Set-Location -LiteralPath 'meet4CloudService'
 Get-Location
-Get-ChildItem -LiteralPath 'site/index.html', 'tests/challenge.ps1', 'tests/challenge.sh'
+Get-ChildItem -LiteralPath 'site/index.html', 'scripts/start-lab04.ps1', 'tests/challenge.ps1', 'tests/challenge.sh'
 git remote -v
 ```
 
-**Fungsi/cara kerja:** `GetFolderPath` mengambil Documents milik akun, termasuk bila lokasinya dialihkan; `New-Item` membuat folder CloudServices tanpa menghapus isinya. `Set-Location` memindahkan terminal. `git clone` menyalin kode/riwayat Git dan membuat folder repo beserta `.git` dan remote `origin`. **Checkpoint:** lokasi berakhir pada `CloudServices\meet4CloudService`; file **site/index.html**, **tests/challenge.ps1**, dan **tests/challenge.sh** ditemukan; origin menuju SeedFlora/meet4CloudService. Folder tersebut adalah **root repo** untuk perintah Lab 04 berikut. Jika Documents tidak dapat ditulis, gunakan folder pribadi yang diizinkan pengelola.
+**Fungsi/cara kerja:** `GetFolderPath` mengambil Documents milik akun, termasuk bila lokasinya dialihkan; `New-Item` membuat folder CloudServices tanpa menghapus isinya. `Set-Location` memindahkan terminal. `git clone` menyalin kode/riwayat Git dan membuat folder repo beserta `.git` dan remote `origin`. **Checkpoint:** empat file di atas ditemukan dan origin menuju SeedFlora/meet4CloudService. Pada contoh ini lokasi berakhir pada `CloudServices\meet4CloudService`; pada PC Anda path boleh berbeda. Folder yang langsung berisi **site/**, **scripts/**, dan **tests/** adalah **root repo** untuk perintah manual Lab 04. Jika Documents tidak dapat ditulis, gunakan folder pribadi yang diizinkan pengelola.
 
 ![Menu HTTPS GitHub untuk clone materi Lab 04](screenshots/campus/01_clone_https.jpg)
 
-**Command / langkah:** `Code > Local > HTTPS` dan `git clone https://github.com/SeedFlora/meet4CloudService.git`. **Fungsi/cara kerja:** ambil URL sumber dari GitHub lalu salin kode/riwayat ke repo lokal dengan metadata .git dan origin. **Baca:** gambar menu repo pengajar memperlihatkan pilihan HTTPS; URL lengkap tersedia pada command agar dapat disalin. Gambar ini menu GitHub, bukan hasil PowerShell PC kampus; validasi lokasi dan tiga file setelah clone pada PC Anda.
+**Command / langkah:** `Code > Local > HTTPS` dan `git clone https://github.com/SeedFlora/meet4CloudService.git`. **Fungsi/cara kerja:** ambil URL sumber dari GitHub lalu salin kode/riwayat ke repo lokal dengan metadata .git dan origin. **Baca:** gambar menu repo pengajar memperlihatkan pilihan HTTPS; URL lengkap tersedia pada command agar dapat disalin. Gambar ini menu GitHub, bukan hasil PowerShell PC kampus; validasi lokasi dan file setelah clone pada PC Anda.
 
 Hasil clone sudah mempunyai metadata Git, sehingga **tidak perlu `git init`**. Remote publik ini milik pengajar; **jangan push ke repo pengajar**. Perubahan latihan dapat tetap lokal dan tidak wajib dikumpulkan. [Panduan clone GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
 ### 0.3 Jika repo sudah ada
 
-Masuk folder yang sama dan periksa remote/perubahan dahulu:
+Masuk folder repo yang sama melalui **VS Code → File → Open Folder**, kemudian **Terminal → New Terminal**. Periksa lokasi, remote, dan perubahan dahulu:
 
 ```powershell
-$campusFolder = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'CloudServices'
-Set-Location -LiteralPath (Join-Path $campusFolder 'meet4CloudService')
+Get-Location
+Test-Path -LiteralPath '.\site\index.html' -PathType Leaf
 git remote -v
 git status --short
 ```
 
-**Hanya jika `git status --short` kosong**, jalankan:
+`Test-Path` harus **True** dan origin harus repo yang dimaksud. **Hanya jika `git status --short` kosong**, jalankan:
 
 ```powershell
 git pull --ff-only
@@ -90,6 +90,25 @@ git pull --ff-only
 Untuk menyimpan kontribusi proyek kelompok, pilih **Use this template → Create a new repository** pada GitHub dan tentukan owner Anda/kelompok. Ambil URL **Code → Local → HTTPS** dari repo baru, lalu clone URL milik Anda ke folder baru; periksa `git remote -v` sebelum push. Proyek tetap kelompok **3 orang**, dipresentasikan minggu **7 (UTS)** dan **14 (UAS)**; tidak ada penyerahan/repo wajib per lab. [Template GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
 
 **Lokal bukan sepenuhnya offline:** clone memerlukan internet, dan `docker pull` pertama mengunduh image dari registry. Setelah image tersedia, praktik Nginx/HTML melalui localhost dapat dilakukan tanpa internet. Pull/update image baru tetap memerlukan koneksi. Lanjutkan bagian 1 dari root repo yang baru dibuka. Jika memakai Linux/Codespaces, gunakan blok Bash karena sintaks bind mount berbeda; browser Codespaces menggunakan URL Ports, bukan localhost laptop. [Docker pull](https://docs.docker.com/reference/cli/docker/image/pull/), [publikasi port](https://docs.docker.com/get-started/docker-concepts/running-containers/publishing-ports/)
+
+### 0.5 Pilih urutan praktik manual atau shortcut situs
+
+**Praktik lengkap:** ikuti bagian 1 untuk image/environment, bagian 2 untuk lifecycle Nginx pertama, stop/remove container pertama, lalu bagian 3 untuk deploy situs. Pada bagian 3 Anda dapat memilih command manual atau starter sebagai shortcut/repair. Setelah itu lanjutkan bagian 4 untuk outage, hotfix, dan canary.
+
+**Jika sudah memakai starter dan cloudlab-site masih Up pada 8088, jangan membuat cloudlab-nginx bagian 2 pada port yang sama dan jangan menjalankan docker run situs kedua.** Lanjutkan bagian 4 untuk operasi pada situs yang hidup; bagian 1 tetap dapat dicoba untuk image/environment. Anda dapat meninjau penjelasan lifecycle bagian 2 tanpa menjalankan deploy yang memakai port tersebut.
+
+Starter menghitung root repo dari **lokasi file script**, bukan folder aktif terminal; perintahnya ada pada bagian **3.1**. Ia tidak memindahkan working directory terminal pemanggil. Untuk perintah manual/hotfix berikutnya, buka **folder repo sebenarnya** di VS Code dan buat terminal baru. Contoh struktur berikut membantu membedakan folder luar dan repo:
+
+```text
+folder-kerja/
+  site/                         <- folder luar, jangan dipakai sebagai mount lab
+  meet4CloudService/             <- root repo yang dipilih pada Open Folder
+    scripts/start-lab04.ps1
+    scripts/start-lab04.sh
+    site/index.html              <- file yang harus terlihat di container
+    tests/challenge.ps1
+    tests/challenge.sh
+```
 
 ## 1. Kenali tiga image dan environment variable
 
@@ -148,37 +167,96 @@ docker rm cloudlab-nginx
 
 Setelah `stop`, `docker ps` tidak menampilkan container, tetapi `ps -a` menampilkan `Exited`. `start` memakai container lama dan mempertahankan identitasnya; `rm` menghapus objek container setelah berhenti. Image `nginx:alpine` tetap ada. Langkah akhir membebaskan port 8088 untuk situs kasus.
 
+**Checkpoint sebelum bagian 3:** `cloudlab-nginx` sudah di-stop dan di-remove pada dua command terakhir. Periksa `docker ps -a --filter name=cloudlab-`; container pertama tidak lagi tercantum. Jika masih Up, port 8088 masih dimilikinya. Jalankan `docker stop cloudlab-nginx` lalu `docker rm cloudlab-nginx` **hanya untuk container latihan milik Anda** sebelum membuat situs. Container lain yang memakai 8088 ditangani melalui bagian kendala.
+
 ![Status Exited dan Up dalam siklus container](screenshots/04_lifecycle.png)
 
 *Langkah: `stop`, bandingkan `ps` dengan `ps -a`, lalu `start`. Fungsi: melatih diagnosis layanan berhenti. Cara kerja: Docker mengubah state proses container tanpa menghapus image atau membuat container baru. Baca hasil: ID sama, `Exited` sesudah stop dan `Up` sesudah start; `rm` dilakukan setelah stop kedua. Gambar adalah cuplikan output uji lokal aktual yang ditata agar terbaca.*
 
 ## 3. Deploy halaman status dengan bind mount read-only
 
-Pastikan file `site/index.html` berada di repo. Dari **root repo**, jalankan salah satu blok sesuai terminal. Jangan gunakan kedua blok sekaligus.
+Bagian ini menunjukkan command manual di balik starter. Jika situs sudah dibuat dengan starter, gunakan pemeriksaan mount/HTTP di bawah tanpa menjalankan `docker run` kedua. Jika ingin mengulang deploy, starter dengan mode repair menangani container lab yang dikenali.
+
+### 3.1 Shortcut atau repair dengan starter
+
+Untuk urutan praktik lengkap, selesaikan lifecycle bagian 2 dan stop/remove `cloudlab-nginx` terlebih dahulu. Starter membantu menyalakan situs atau memperbaiki mount yang salah tanpa bergantung pada folder aktif terminal atau variabel `$mount` lama. Pilih **satu** command yang cocok:
+
+**PowerShell dari root repo:**
+
+```powershell
+& .\scripts\start-lab04.ps1 -Repair
+```
+
+**PowerShell dari folder induk yang berisi meet4CloudService:**
+
+```powershell
+& .\meet4CloudService\scripts\start-lab04.ps1 -Repair
+```
+
+**Dari lokasi lain:** pilih file `scripts/start-lab04.ps1` di Explorer/VS Code, salin path lengkap, lalu panggil dengan `&` dan tanda kutip: `& 'PATH_LENGKAP_REPO_ANDA\scripts\start-lab04.ps1' -Repair`. Ganti placeholder dengan path file yang benar. Tanda kutip membuat path dengan spasi menjadi satu argumen; tidak ada keharusan menggunakan drive atau nama folder tertentu.
+
+**Git Bash/Linux/Codespaces dari root repo:**
+
+```bash
+bash scripts/start-lab04.sh --repair
+```
+
+Dari folder induk gunakan `bash "meet4CloudService/scripts/start-lab04.sh" --repair`. Dari lokasi lain panggil path lengkap file script dalam tanda kutip. Git Bash digunakan melalui **jendela Git Bash**, sedangkan terminal Codespaces adalah Linux.
+
+**Fungsi/cara kerja:** starter memvalidasi repo, file `site/index.html`, dan Docker sebelum perubahan. Tanpa opsi repair, starter menolak nama container yang sudah ada. `-Repair`/`--repair` mengganti **hanya** container `cloudlab-site`/`cloudlab-nginx` dengan image Nginx yang dikenali; tidak menghapus container lain atau nama lab yang memakai image berbeda. File HTML pada host tidak dihapus. Port default 8088 diteruskan ke 80 dalam container. Jika 8088 dipakai proses lain, gunakan `-SitePort 8090` atau `--port 8090`, buka URL 8090, dan catat bahwa checker standar memakai 8088/8089. Jangan menghentikan proses milik orang lain.
+
+**Checkpoint:** Source/mount menunjuk folder **site di repo yang berisi index.html**, container Up, dan HTTP 200. Di laptop buka <http://127.0.0.1:8088/>; di Codespaces buka URL **Ports 8088**. Jika starter menolak prasyarat, baca error dan perbaiki path/Engine sebelum mengulang. Starter menyalakan situs; ia belum menjalankan seluruh challenge A–E.
+
+**Sesudah starter berhasil:** lewati `docker run` manual bagian 3.2 dan pembuatan `cloudlab-nginx` pada 8088. Periksa mount/HTTP lalu lanjutkan bagian 4. Starter tidak mengubah working directory pemanggil; untuk hotfix HTML manual, buka root repo dan terminal baru seperti langkah berikut.
+
+### 3.2 Deploy manual setelah validasi lokasi dan port
+
+Pada VS Code pilih **File → Open Folder → folder repo sebenarnya**, lalu **Terminal → New Terminal**. Folder yang dipilih langsung berisi `site/index.html`, `scripts/`, dan `tests/`. Jika workspace luar mempunyai subfolder `meet4CloudService`, pilih subfolder tersebut; `site/` luar dapat berbeda atau kosong. **Jangan membuat folder site kosong untuk menghilangkan error.** Selesaikan stop/remove `cloudlab-nginx` pada bagian 2 terlebih dahulu agar 8088 tersedia.
+
+Jalankan **seluruh** blok sesuai terminal. PowerShell `$siteDir` dan `$mount` harus dibuat pada **sesi terminal yang sama** dengan `docker run`; variabel dari terminal lama tidak otomatis ada pada terminal baru. Blok memakai scope sendiri agar validasi gagal menghentikan deploy. Jangan menyalin baris `docker run` saja.
 
 **Windows PowerShell:**
 
 ```powershell
-$siteDir = Join-Path (Get-Location).Path 'site'
-$mount = "type=bind,source=$siteDir,target=/usr/share/nginx/html,readonly"
-docker run --name cloudlab-site -d -p 127.0.0.1:8088:80 --mount $mount nginx:alpine
-docker ps --filter name=cloudlab-site
-docker port cloudlab-site 80
-curl.exe -I http://127.0.0.1:8088/
+& {
+  Get-Location
+  if (-not (Test-Path -LiteralPath '.\site\index.html' -PathType Leaf)) {
+    throw 'STOP: buka root repo yang berisi site/index.html, lalu ulangi seluruh blok.'
+  }
+  $siteDir = (Resolve-Path -LiteralPath '.\site' -ErrorAction Stop).Path
+  $mount = "type=bind,source=$siteDir,target=/usr/share/nginx/html,readonly"
+  Write-Output $mount
+  docker run --name cloudlab-site -d -p 127.0.0.1:8088:80 --mount "$mount" nginx:alpine
+  if ($LASTEXITCODE -ne 0) { throw 'Docker run gagal; baca error sebelum melanjutkan.' }
+  docker ps --filter name=cloudlab-site
+  docker port cloudlab-site 80
+  curl.exe -I http://127.0.0.1:8088/
+}
 ```
 
 **Linux/Codespaces Bash:**
 
 ```bash
-site_dir="$(pwd)/site"
-mount="type=bind,source=$site_dir,target=/usr/share/nginx/html,readonly"
-docker run --name cloudlab-site -d -p 127.0.0.1:8088:80 --mount "$mount" nginx:alpine
-docker ps --filter name=cloudlab-site
-docker port cloudlab-site 80
-curl -I http://127.0.0.1:8088/
+(
+  pwd
+  test -f "site/index.html" || { echo "STOP: buka root repo yang berisi site/index.html"; exit 1; }
+  site_dir="$(cd site && pwd)" || exit 1
+  mount="type=bind,source=$site_dir,target=/usr/share/nginx/html,readonly"
+  printf '%s\n' "$mount"
+  docker run --name cloudlab-site -d -p 127.0.0.1:8088:80 --mount "$mount" nginx:alpine || exit 1
+  docker ps --filter name=cloudlab-site
+  docker port cloudlab-site 80
+  curl -I http://127.0.0.1:8088/
+)
 ```
 
 Path `source` menunjuk folder **host**; `target` adalah folder yang dibaca Nginx **dalam container**. `readonly` membuat proses web tidak dapat mengubah file host. Buka <http://127.0.0.1:8088/> di Chrome. Di Codespaces, gunakan panel **Ports** untuk membuka 8088 setelah container hidup. Halaman awal harus menampilkan `STATUS_OK: Layanan normal`.
+
+**Fungsi/cara kerja validasi:** `Test-Path`/`test -f` memastikan index ada sebelum `docker run`; `Resolve-Path`/`cd site && pwd` mengambil path folder sebenarnya. Nilai mount ditampilkan agar Anda dapat membaca Source sebelum Docker memakainya. Tanda kutip pada `--mount` menjaga nilai dengan spasi sebagai satu argumen. Jika `$mount` belum dibuat, Docker dapat membaca `nginx:alpine` sebagai argumen mount; menjalankan seluruh blok atau starter mencegah langkah yang terlewat.
+
+![Validasi lokasi repo dan sumber bind mount situs Lab 04](screenshots/mount/01_path_and_mount.jpg)
+
+**Command / langkah:** jalankan starter yang sesuai lokasi terminal atau seluruh blok deploy manual, lalu `docker inspect cloudlab-site --format '{{range .Mounts}}{{.Source}} -> {{.Destination}} RW={{.RW}}{{end}}'` dan `curl.exe -I http://127.0.0.1:8088/` (Bash: `curl -I http://127.0.0.1:8088/`). **Fungsi/cara kerja:** validasi memastikan index ada; starter menentukan repo dari lokasi script atau blok manual menyelesaikan path dari root repo. Inspect membaca Source yang benar-benar dipakai Docker dan curl meminta header HTTP. **Hasil yang diperiksa:** Source menunjuk site di repo yang benar, target `/usr/share/nginx/html`, RW=false, dan HTTP 200. Path bukti runtime adalah contoh; nama folder pada PC Anda dapat berbeda.
 
 ![Halaman status awal melalui container](screenshots/05_site_awal.jpg)
 
@@ -187,12 +265,24 @@ Path `source` menunjuk folder **host**; `target` adalah folder yang dibaca Nginx
 Periksa mount dan port tanpa menebak:
 
 ```powershell
-docker inspect cloudlab-site --format '{{range .Mounts}}{{.Type}} {{.Destination}} RW={{.RW}}{{end}}'
+docker inspect cloudlab-site --format '{{range .Mounts}}{{.Source}} -> {{.Destination}} RW={{.RW}}{{end}}'
 docker port cloudlab-site 80
 docker logs --tail 10 cloudlab-site
 ```
 
-Cari `bind /usr/share/nginx/html RW=false` dan `127.0.0.1:8088`. `RW=false` adalah bukti mount read-only, bukan klaim dari nama folder. `logs` menunjukkan request yang baru dibuat browser/curl.
+Cari Source folder **site dalam repo**, target `/usr/share/nginx/html RW=false`, dan port `127.0.0.1:8088`. `RW=false` adalah bukti mount read-only, bukan klaim dari nama folder. `logs` menunjukkan request yang baru dibuat browser/curl.
+
+### Jika situs Up tetapi HTTP 403
+
+HTTP 403 berarti request sampai ke Nginx tetapi tidak dapat dilayani. Pada kasus folder bersarang, penyebab yang perlu diperiksa dahulu adalah folder host `site/` yang salah/kosong; direktori tanpa index dapat ditolak karena directory listing tidak diaktifkan. Pemeriksaan berikut tidak mengubah file:
+
+```powershell
+docker inspect cloudlab-site --format '{{range .Mounts}}{{.Source}} -> {{.Destination}} RW={{.RW}}{{end}}'
+docker logs --tail 20 cloudlab-site
+docker exec cloudlab-site ls -la /usr/share/nginx/html
+```
+
+**Cara membaca:** cocokkan Source dengan folder repo yang berisi `site/index.html`. `ls` dalam container harus menampilkan `index.html`; log dapat menjelaskan `directory index ... is forbidden` atau kendala izin. Jika Source salah, jalankan **starter dari repo yang benar** dengan `-Repair`/`--repair`, lalu uji HTTP dan refresh browser. Jangan menyalin HTML ke folder luar agar mount yang salah terlihat berhasil. Jika index/Source sudah benar, lanjutkan pemeriksaan error log karena 403 juga dapat disebabkan konfigurasi/izin; jangan mengubah izin secara acak.
 
 ![Docker Desktop memperlihatkan container situs](screenshots/06_docker_site.jpg)
 
@@ -309,6 +399,8 @@ Untuk A, gunakan perintah pada bagian 1. Untuk B, gunakan `docker ps`, `docker p
 bash tests/challenge.sh
 ```
 
+Jika terminal masih berada di folder induk, panggil `& .\meet4CloudService\tests\challenge.ps1` atau `bash "meet4CloudService/tests/challenge.sh"`. Dari lokasi lain, panggil path lengkap checker dalam tanda kutip. Checker menentukan root dari lokasi script; untuk command manual yang mengedit `site/index.html`, gunakan terminal pada root repo seperti bagian 3.
+
 Tes memeriksa hasil akhir yang dapat diamati: target fungsi **14 PASS, 0 FAIL**, bukan nilai praktikum. Environment variable A, riwayat stop/start C, dan percobaan bentrokan E dapat diamati saat demo; bila ingin merekam proses, simpan screenshot/catatan opsional karena status akhir tidak membuktikan kejadian itu pernah dilakukan. Pada Windows, jalankan skrip Bash dari **jendela Git Bash**, bukan mengetik `bash` dalam PowerShell yang mungkin membuka WSL.
 
 ![Challenge A-E lulus setelah semua perbaikan](screenshots/10_challenge_pass.png)
@@ -350,7 +442,10 @@ Image tetap ada sehingga dapat dipakai lagi tanpa pull ulang. `rm` menghapus con
 | `Cannot connect to Docker daemon` | Buka Docker Desktop hingga Engine running; ulangi `docker version`. |
 | Port 8088/8089 sudah dipakai | `docker ps` untuk mencari container lab. Jangan menghentikan container lain tanpa tahu pemiliknya; gunakan port kosong dan sesuaikan command, URL, serta catatan opsional bila perlu. |
 | Nama container sudah dipakai | `docker ps -a --filter name=cloudlab-`; jika sisa percobaan milikmu, `docker rm -f` nama tersebut, lalu ulangi. |
-| `--mount` gagal di path berspasi | Jalankan dari root repo, gunakan tanda kutip pada seluruh nilai `--mount` seperti contoh PowerShell/Bash. |
+| Error `--mount` menyebut `nginx:alpine` | `$mount` mungkin kosong/belum dibuat pada terminal itu. Jalankan starter atau seluruh blok bagian 3 termasuk inisialisasi variabel pada sesi yang sama. |
+| `--mount` gagal di path berspasi | Periksa index/root dengan validasi bagian 3; gunakan tanda kutip pada seluruh nilai `--mount` atau jalankan starter dari lokasi script yang benar. |
+| Nginx Up tetapi HTTP 403 | Bandingkan Source mount, log, dan `ls` dalam container pada bagian 3. Pastikan index.html berasal dari site dalam repo, bukan site luar yang kosong; starter repair dapat memasang ulang folder yang benar. |
+| Starter menolak nama container yang ada | Tinjau nama/image. Mode repair hanya untuk cloudlab-site/cloudlab-nginx Nginx yang dikenali; jangan menghapus container lain untuk memaksa berhasil. |
 | Halaman tidak berubah | Pastikan `site/index.html` tersimpan, mount mengarah ke folder repo yang benar, lalu refresh Chrome. |
 | Challenge C/D/E gagal | Periksa `docker ps`, `docker port`, `docker inspect`, dan isi `site/index.html`; baca hint dari skrip sebelum mengulang. |
 | PowerShell menolak `.ps1` | Jalankan `bash tests/challenge.sh` dari Git Bash/WSL, atau minta dosen membantu dengan kebijakan skrip kampus; langkah Docker tetap dapat dilakukan di PowerShell. |
